@@ -1,28 +1,29 @@
 #include <stdlib.h>
 
-char **strtow_unique(char *str, char *delims);
-int is_delim_unique(char ch, char *delims);
-int get_word_length_unique(char *str, char *delims);
-int get_word_count_unique(char *str, char *delims);
-char *get_next_word_unique(char *str, char *delims);
+char **strtow(char *str, char *delims);
+int is_delim(char ch, char *delims);
+int get_word_length(char *str, char *delims);
+int get_word_count(char *str, char *delims);
+char *get_next_word(char *str, char *delims);
 
 /**
- * strtow_unique - takes a string and separates its words
+ * strtow - takes a string and seperates its words
  *
- * @str: string to separate into words
- * @delims: delimiters to use to delimit words
+ * @str: string to seperate into words
+ * @delims: delimitors to use to delimit words
  *
  * Return: 2D array of pointers to each word
  */
 
-char **strtow_unique(char *str, char *delims)
+char **strtow(char *str, char *delims)
 {
 	char **words = NULL;
 	int wc, wordLen, n, i = 0;
 
 	if (str == NULL || !*str)
 		return (NULL);
-	wc = get_word_count_unique(str, delims);
+	wc = get_word_count(str, delims);
+
 
 	if (wc == 0)
 		return (NULL);
@@ -31,10 +32,10 @@ char **strtow_unique(char *str, char *delims)
 		return (NULL);
 	while (i < wc)
 	{
-		wordLen = get_word_length_unique(str, delims);
-		if (is_delim_unique(*str, delims))
+		wordLen = get_word_length(str, delims);
+		if (is_delim(*str, delims))
 		{
-			str = get_next_word_unique(str, delims);
+			str = get_next_word(str, delims);
 		}
 		words[i] = malloc((wordLen + 1) * sizeof(char));
 		if (words[i] == NULL)
@@ -54,7 +55,7 @@ char **strtow_unique(char *str, char *delims)
 			n++;
 		}
 		words[i][n] = '\0'; /* set end of str */
-		str = get_next_word_unique(str, delims);
+		str = get_next_word(str, delims);
 		i++;
 	}
 	words[i] = NULL; /* last element is null for iteration */
@@ -62,16 +63,16 @@ char **strtow_unique(char *str, char *delims)
 }
 
 /**
- * is_delim_unique - checks if stream has delimiter char
+ * is_delim - checks if stream has delimitor char
  *
  * @ch: character in stream
  *
- * @delims: Pointer to null terminated array of delimiters
+ * @delims: Pointer to null terminated array of delimitors
  *
  * Return: 1 (success) 0 (failure)
  */
 
-int is_delim_unique(char ch, char *delims)
+int is_delim(char ch, char *delims)
 {
 	int i = 0;
 
@@ -85,27 +86,27 @@ int is_delim_unique(char ch, char *delims)
 }
 
 /**
- * get_word_length_unique - gets the word length of current word in str
+ * get_word_length - gets the word length of cur word in str
  *
  * @str: string to get word length from current word
- * @delims: delimiters to use to delimit words
+ * @delims: delimitors to use to delimit words
  *
  * Return: word length of current word
  */
 
-int get_word_length_unique(char *str, char *delims)
+int get_word_length(char *str, char *delims)
 {
 	int wLen = 0, pending = 1, i = 0;
 
 	while (*(str + i))
 	{
-		if (is_delim_unique(str[i], delims))
+		if (is_delim(str[i], delims))
 			pending = 1;
 		else if (pending)
 		{
 			wLen++;
 		}
-		if (wLen > 0 && is_delim_unique(str[i], delims))
+		if (wLen > 0 && is_delim(str[i], delims))
 			break;
 		i++;
 	}
@@ -113,21 +114,21 @@ int get_word_length_unique(char *str, char *delims)
 }
 
 /**
- * get_word_count_unique - gets the word count of a string
+ * get_word_count - gets the word count of a string
  *
  * @str: string to get word count from
- * @delims: delimiters to use to delimit words
+ * @delims: delimitors to use to delimit words
  *
  * Return: the word count of the string
  */
 
-int get_word_count_unique(char *str, char *delims)
+int get_word_count(char *str, char *delims)
 {
 	int wc = 0, pending = 1, i = 0;
 
 	while (*(str + i))
 	{
-		if (is_delim_unique(str[i], delims))
+		if (is_delim(str[i], delims))
 			pending = 1;
 		else if (pending)
 		{
@@ -140,22 +141,22 @@ int get_word_count_unique(char *str, char *delims)
 }
 
 /**
- * get_next_word_unique - gets the next word in a string
+ * get_next_word - gets the next word in a string
  *
  * @str: string to get next word from
- * @delims: delimiters to use to delimit words
+ * @delims: delimitors to use to delimit words
  *
  * Return: pointer to first char of next word
  */
 
-char *get_next_word_unique(char *str, char *delims)
+char *get_next_word(char *str, char *delims)
 {
 	int pending = 0;
 	int i = 0;
 
 	while (*(str + i))
 	{
-		if (is_delim_unique(str[i], delims))
+		if (is_delim(str[i], delims))
 			pending = 1;
 		else if (pending)
 			break;

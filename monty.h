@@ -47,7 +47,7 @@ int check_mode(stack_t *stack);
 void free_tokens(void);
 unsigned int token_arr_len(void);
 int run_monty(FILE *script_fd);
-void set_op_tok_error_unique(int error_code);
+void set_op_tok_error(int error_code);
 
 void monty_push(stack_t **stack, unsigned int line_number);
 void monty_pall(stack_t **stack, unsigned int line_number);
@@ -72,13 +72,13 @@ char *get_int(int n);
 
 
 int usage_error(void);
-int malloc_error_unique(void);
+int malloc_error(void);
 int f_open_error(char *filename);
 int unknown_op_error(char *opcode, unsigned int line_number);
-int no_int_error_unique(unsigned int line_number);
+int no_int_error(unsigned int line_number);
 int pop_error(unsigned int line_number);
 int pint_error(unsigned int line_number);
-int short_stack_error_unique(unsigned int line_number, char *op);
+int short_stack_error(unsigned int line_number, char *op);
 int div_error(unsigned int line_number);
 int pchar_error(unsigned int line_number, char *message);
 

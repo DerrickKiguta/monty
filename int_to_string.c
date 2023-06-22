@@ -1,89 +1,91 @@
 #include <stdlib.h>
 
-char *convert_to_string(int number);
-unsigned int absolute_value(int value);
-int calculate_string_length(unsigned int number, unsigned int base);
-void fill_buffer(unsigned int number, unsigned int base, char *buffer, int buffer_size);
+char *get_int(int num);
+unsigned int _abs(int);
+int get_numbase_len(unsigned int num, unsigned int base);
+void fill_numbase_buff(unsigned int num, unsigned int base,
+		       char *buff, int buff_size);
 
 /**
- * convert_to_string - Converts an integer to a string.
- * @number: Number to convert to a string.
- * Return: Pointer to the newly created string. NULL if malloc fails.
+ * get_int - gets a character pointer to new string containing int
+ * @num: number to convert to string
+ * Return: character pointer to newly created string. NULL if malloc fails.
  */
-char *convert_to_string(int number)
+char *get_int(int num)
 {
 	unsigned int temp;
 	int length = 0;
 	long num_l = 0;
-	char *result;
+	char *ret;
 
-	temp = absolute_value(number);
-	length = calculate_string_length(temp, 10);
+	temp = _abs(num);
+	length = get_numbase_len(temp, 10);
 
-	if (number < 0 || num_l < 0)
-		length++; /* Include negative sign */
-	result = malloc(length + 1); /* Create new string */
-	if (!result)
-		return NULL;
+	if (num < 0 || num_l < 0)
+		length++; /* negative sign */
+	ret = malloc(length + 1); /* create new string */
+	if (!ret)
+		return (NULL);
 
-	fill_buffer(temp, 10, result, length);
-	if (number < 0 || num_l < 0)
-		result[0] = '-';
+	fill_numbase_buff(temp, 10, ret, length);
+	if (num < 0 || num_l < 0)
+		ret[0] = '-';
 
-	return result;
+	return (ret);
 }
 
 /**
- * absolute_value - Calculates the absolute value of an integer.
- * @value: Integer to calculate the absolute value of.
- * Return: Unsigned integer representing the absolute value of value.
+ * _abs - gets the absolute value of an integer
+ * @i: integer to get absolute value of
+ * Return: unsigned integer abs rep of i
  */
-unsigned int absolute_value(int value)
+unsigned int _abs(int i)
 {
-	if (value < 0)
-		return (unsigned int)(-value);
-	return (unsigned int)value;
+	if (i < 0)
+		return (-(unsigned int)i);
+	return ((unsigned int)i);
 }
 
 /**
- * calculate_string_length - Calculates the length of a buffer needed for an unsigned integer.
- * @number: Number to calculate the length for.
- * @base: Base of the number representation used by the buffer.
- * Return: Integer representing the length of the buffer needed (excluding null byte).
+ * get_numbase_len - gets length of buffer needed for an unsigned int
+ * @num: number to get length needed for
+ * @base: base of number representation used by buffer
+ * Return: integer containing length of buffer needed (doesn't contain null bt)
  */
-int calculate_string_length(unsigned int number, unsigned int base)
+int get_numbase_len(unsigned int num, unsigned int base)
 {
-	int length = 1; /* All numbers contain at least one digit */
+	int len = 1; /* all numbers contain atleast one digit */
 
-	while (number > base - 1)
+	while (num > base - 1)
 	{
-		length++;
-		number /= base;
+		len++;
+		num /= base;
 	}
-	return length;
+	return (len);
 }
 
 /**
- * fill_buffer - Fills a buffer with correct numbers up to base 36.
- * @number: Number to convert to string given the base.
- * @base: Base of the number used in the conversion (works up to base 36).
- * @buffer: Buffer to fill with the result of the conversion.
- * @buffer_size: Size of the buffer in bytes.
- * Return: Always void.
+ * fill_numbase_buff - fills buffer with correct numbers up to base 36
+ * @num: number to convert to string given base
+ * @base: base of number used in conversion, only works up to base 36
+ * @buff: buffer to fill with result of conversion
+ * @buff_size: size of buffer in bytes
+ * Return: always void.
  */
-void fill_buffer(unsigned int number, unsigned int base, char *buffer, int buffer_size)
+void fill_numbase_buff(unsigned int num, unsigned int base,
+			char *buff, int buff_size)
 {
-	int remainder, i = buffer_size - 1;
+	int rem, i = buff_size - 1;
 
-	buffer[buffer_size] = '\0';
+	buff[buff_size] = '\0';
 	while (i >= 0)
 	{
-		remainder = number % base;
-		if (remainder > 9) /* Return lowercase ASCII value representation */
-			buffer[i] = remainder + 87; /* 10 will be 'a', 11 = 'b', ... */
+		rem = num % base;
+		if (rem > 9) /* return lowercase ascii val representation */
+			buff[i] = rem + 87; /* 10 will be a, 11 = b, ... */
 		else
-			buffer[i] = remainder + '0';
-		number /= base;
+			buff[i] = rem + '0';
+		num /= base;
 		i--;
 	}
 }

@@ -1,36 +1,36 @@
 #include "monty.h"
 
 /**
- * set_op_tok_error_unique - Sets last element of op_toks_unique to be an error code.
- * @error_code: Integer to store as a string in op_toks_unique.
+ * set_op_tok_error - Sets last element of op_toks to be an error code.
+ * @error_code: Integer to store as a string in op_toks.
  */
-void set_op_tok_error_unique(int error_code)
+void set_op_tok_error(int error_code)
 {
-	int toks_len_unique = 0, i = 0;
-	char *exit_str_unique = NULL;
-	char **new_toks_unique = NULL;
+	int toks_len = 0, i = 0;
+	char *exit_str = NULL;
+	char **new_toks = NULL;
 
-	toks_len_unique = token_arr_len_unique();
-	new_toks_unique = malloc(sizeof(char *) * (toks_len_unique + 2));
-	if (!op_toks_unique)
+	toks_len = token_arr_len();
+	new_toks = malloc(sizeof(char *) * (toks_len + 2));
+	if (!op_toks)
 	{
-		malloc_error_unique();
+		malloc_error();
 		return;
 	}
-	while (i < toks_len_unique)
+	while (i < toks_len)
 	{
-		new_toks_unique[i] = op_toks_unique[i];
+		new_toks[i] = op_toks[i];
 		i++;
 	}
-	exit_str_unique = get_int_unique(error_code);
-	if (!exit_str_unique)
+	exit_str = get_int(error_code);
+	if (!exit_str)
 	{
-		free(new_toks_unique);
-		malloc_error_unique();
+		free(new_toks);
+		malloc_error();
 		return;
 	}
-	new_toks_unique[i++] = exit_str_unique;
-	new_toks_unique[i] = NULL;
-	free(op_toks_unique);
-	op_toks_unique = new_toks_unique;
+	new_toks[i++] = exit_str;
+	new_toks[i] = NULL;
+	free(op_toks);
+	op_toks = new_toks;
 }
